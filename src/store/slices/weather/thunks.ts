@@ -14,13 +14,26 @@ export const getWeither = (location: string)=>{
     
             const resp = await data.json();
 
-            const {name, sys, main, weather} = resp;
+            const {name, sys, main, weather, message: errorMessage} = resp;
+
+            if(errorMessage !== undefined){
+                return dispatch(
+                    onWeather(
+                    {
+                        ok: false, 
+                        errorMessage, 
+                        name : '',
+                        country: '', 
+                        temp: 0, 
+                        time: ''
+                    }))
+            }
 
             const {country} = sys;
             const {temp} = main;
             const {main: time} = weather[0];
 
-            dispatch(onWeather({name, country, temp, time}))
+            dispatch(onWeather({ok: true, errorMessage: '', name, country, temp, time}))
 
             dispatch(endLoading());
             
