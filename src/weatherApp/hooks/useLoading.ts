@@ -12,9 +12,10 @@ export const useLoading = () => {
             setOnLoading(false);
         }
         
-        if(isLoading === 'load'){
+        else if(isLoading === 'load'){
             setOnLoading(true);
         }
+
     },[isLoading])
 
     return {

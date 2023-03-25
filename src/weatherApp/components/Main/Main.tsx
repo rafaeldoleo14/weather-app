@@ -1,15 +1,16 @@
 
-import React, { useEffect } from 'react'
 import coldImg from '../../../assets/cold-bg.jpg'
 import warnImg from '../../../assets/warm-bg.jpg';
 import { useAppSelector } from '../../hooks/hooks';
 import { useLoading } from '../../hooks/useLoading'
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { CityInfo, Points, SearchInput, TypesWeather } from '../index'
+import { Loading } from '../Loading/Loading';
 
 export const Main = () => {
 
   const {onloading} = useLoading();
-  const {temp} = useAppSelector(state => state.weather);
+  const {temp, ok, errorMessage} = useAppSelector(state => state.weather);
 
   return (
     <>
@@ -25,7 +26,9 @@ export const Main = () => {
 
                 {
 
-                  !onloading ? (<div className='position-relative'>Cargando...</div>) :
+                  !ok && errorMessage !== '' ? (<ErrorMessage/>) :
+
+                  !onloading ? (<Loading/>) :
 
                   (
                     <>
